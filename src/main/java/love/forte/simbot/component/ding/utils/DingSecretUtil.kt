@@ -21,7 +21,7 @@ import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
 /**
- *
+ * 钉钉的加签操作
  * @author ForteScarlet <ForteScarlet></ForteScarlet>@163.com>
  * 2020/8/7
  */

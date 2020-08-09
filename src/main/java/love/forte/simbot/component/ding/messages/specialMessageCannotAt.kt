@@ -141,6 +141,10 @@ data class DingWholeActionCard(
         override val title: String, override val text: String, override val btnOrientation: String,
         val singleTitle: String, val singleURL: String
 ) : DingActionCard() {
+    constructor(title: String, text: String, btnOrientation: String, btn: DingAutonomyActionCardButtons):
+            this(title, text, btnOrientation, btn.title, btn.actionURL)
+
+
     override fun getValue(key: String): Any? {
         return when (key) {
             "singleTitle" -> singleTitle
@@ -232,10 +236,53 @@ data class DingAutonomyActionCard(
 data class DingAutonomyActionCardButtons(val title: String, val actionURL: String)
 
 
+/**
+ * 钉钉的FeedCard类型消息
+ *
+ * feed card只有一个links类型参数，内容为多个链接
+ * 但是对于使用CQ码解析可能就会困难一些
+ *
+ */
+data class DingFeedCard(val links: Array<DingFeedCardLink>): BaseNormalDingSpecialMessage<DingFeedCard>("feedCard") {
+    /**
+     * 只有`links`可以被获取到
+     */
+    override fun get(key: String): Any? {
+        return if(key == "links") links else null
+    }
+
+    override fun compareTo(other: DingSpecialMessage): Int {
+        return if (other is DingFeedCard) {
+            this.links.size.compareTo(other.links.size)
+        } else this compareWith other
+    }
+
+    /**
+     * 合并同类型，即合并links数组并去重
+     */
+    override fun doPlus(other: DingFeedCard): DingFeedCard {
+        val plusLinks = (this.links + other.links).distinct()
+        return DingFeedCard(plusLinks.toTypedArray())
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as DingFeedCard
+
+        if (!links.contentEquals(other.links)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return links.contentHashCode()
+    }
+}
 
 
-
-
-
-
-
+/**
+ * [DingFeedCard]中包含的link链接
+ */
+data class DingFeedCardLink(val title: String, val messageURL: String, val picURL: String)

@@ -15,7 +15,9 @@ package love.forte.simbot.component.ding.sender
 import com.alibaba.fastjson.JSON
 import com.forte.qqrobot.sender.HttpClientAble
 import love.forte.simbot.component.ding.DingConfiguration
+import love.forte.simbot.component.ding.messages.DingSpecialMessage
 import love.forte.simbot.component.ding.messages.DingSpecialMessageChain
+import love.forte.simbot.component.ding.messages.toChain
 import love.forte.simbot.component.ding.sceret.DingSecretCalculator
 import love.forte.simbot.component.ding.utils.DingCQUtil
 
@@ -26,6 +28,8 @@ import love.forte.simbot.component.ding.utils.DingCQUtil
 interface DingSender {
     fun sendMsg(msg: String): String
     fun sendMsg(msg: DingSpecialMessageChain): String
+    @JvmDefault
+    fun sendMsg(msg: DingSpecialMessage): String = sendMsg(msg.toChain())
 }
 
 /**

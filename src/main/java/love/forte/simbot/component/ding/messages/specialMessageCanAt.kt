@@ -31,9 +31,11 @@ package love.forte.simbot.component.ding.messages
  *  }
 ```
  */
-data class DingAt(val atMobiles: Array<String>, val isAtAll: Boolean = false): BaseNormalDingSpecialMessage<DingAt>("at") {
+data class DingAt
+@JvmOverloads
+constructor(val atMobiles: Array<String>, val isAtAll: Boolean = false): BaseNormalDingSpecialMessage<DingAt>("at") {
 
-    companion object DingAtAll {
+    companion object {
         @JvmStatic
         val atAll = DingAt(arrayOf(), true)
         @JvmStatic
@@ -170,3 +172,128 @@ data class DingMarkdown(val title: String, val text: String): BaseNormalDingSpec
     }
 
 }
+
+
+/**
+ * [DingMarkdown]的builder
+ * 官方文档中提到支持的语法：
+ * - 1~6级标题
+ * - 引用
+ * - 文字加粗
+ * - 链接
+ * - 图片
+ * - 有序/无序列表
+ * 注意，线程不安全
+ */
+@Suppress("MemberVisibilityCanBePrivate")
+class DingMarkdownBuilder(var title: String){
+    private val textBuilder = StringBuilder(32)
+    /** 最终的正文 */
+    val text: String
+    get() = textBuilder.toString()
+
+    fun plus(v: String): DingMarkdownBuilder {
+        textBuilder.append(v)
+        return this
+    }
+    fun plus(v: Char): DingMarkdownBuilder {
+        textBuilder.append(v)
+        return this
+    }
+    fun newLine(): DingMarkdownBuilder = plus('\n')
+    fun plusBlank(): DingMarkdownBuilder = plus(' ')
+
+
+    /**
+     * 标题与等级
+     * 会自动拼接一个换行
+     * @see h1
+     * @see h2
+     * @see h3
+     * @see h4
+     * @see h5
+     * @see h6
+     */
+    fun h(head: String, level: Int): DingMarkdownBuilder {
+        if(level <= 0){
+            throw IllegalArgumentException("level less than 0")
+        }
+        for (i in 0 until level) {
+            plus('#')
+        }
+        return plusBlank().plus(head).newLine()
+    }
+    fun h1(head: String): DingMarkdownBuilder = h(head, 1)
+    fun h2(head: String): DingMarkdownBuilder = h(head, 2)
+    fun h3(head: String): DingMarkdownBuilder = h(head, 3)
+    fun h4(head: String): DingMarkdownBuilder = h(head, 4)
+    fun h5(head: String): DingMarkdownBuilder = h(head, 5)
+    fun h6(head: String): DingMarkdownBuilder = h(head, 6)
+
+    /**
+     * 引用
+     */
+    fun quote(quote: String): DingMarkdownBuilder = plus('>').plusBlank().plus(quote)
+
+    /**
+     * plus一个加粗的字
+     */
+    fun bold(bold: String): DingMarkdownBuilder = plus("**").plus(bold).plus("**")
+
+    /**
+     * plus一个斜体的字
+     */
+    fun italic(italic: String): DingMarkdownBuilder = plus('*').plus(italic).plus('*')
+
+    /**
+     * 追加一个链接
+     */
+    fun link(description: String, url: String): DingMarkdownBuilder =
+            plus('[').plus(description).plus(']')
+                    .plus('(').plus(url).plus(')')
+
+    /**
+     * 追加一个图片
+     */
+    fun image(url: String): DingMarkdownBuilder = plus("![](").plus(url).plus(')')
+
+    /**
+     * 追加一个描述为图片的链接
+     */
+    fun linkImage(imageUrl: String, linkUrl: String): DingMarkdownBuilder =
+            plus('[')
+                    .plus("![](").plus(imageUrl).plus(')')
+                    .plus(']')
+                    .plus('(').plus(linkUrl).plus(')')
+
+
+    /**
+     * 构建列表
+     */
+    private inline fun list(vararg list: String, left: (Int) -> String): DingMarkdownBuilder{
+        newLine()
+        for (i in list.indices) {
+            plus(left(i)).plusBlank().plus(list[i]).newLine()
+        }
+        return newLine()
+    }
+
+    /**
+     * 无序列表
+     */
+    fun unorderedList(vararg list: String): DingMarkdownBuilder = list(*list) { "-" }
+
+    /**
+     * 有序列表
+     */
+    fun orderedList(vararg list: String): DingMarkdownBuilder = list(*list) { "${it+1}." }
+
+    /**
+     * 构建一个[DingMarkdown]实例
+      */
+    fun build(): DingMarkdown = DingMarkdown(title, text)
+}
+
+
+
+

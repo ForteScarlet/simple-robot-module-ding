@@ -18,7 +18,8 @@ import java.util.AbstractMap
 
 /**
  * 最终的消息json汇总链
- * 最终的msgtype会根据[spMessageChain]的第一个**非`at`**类型的消息为准。
+ * 最终的msgtype会根据[DingSpecialMessageChain]的构造参数`spMessageChain`的第一个**非`at`**类型的消息为准。
+ * 如果要作为发送消息的json串，请获取并转化[data]而不是此类自身
  */
 @Suppress("JoinDeclarationAndAssignment", "MemberVisibilityCanBePrivate")
 open class DingSpecialMessageChain(spMessageChain: Array<DingSpecialMessage>) {
@@ -32,7 +33,8 @@ open class DingSpecialMessageChain(spMessageChain: Array<DingSpecialMessage>) {
             mutableMap.merge(it.first, it.second) {
                 oldVal, newVal ->
                 if(oldVal is DingSpecialMessage && newVal is DingSpecialMessage) {
-                    DingSpecialMessageMerger.merge(oldVal, newVal)
+                    oldVal + newVal
+//                    DingSpecialMessageMerger.merge(oldVal, newVal)
                 }else {
                     newVal
                 }
@@ -56,6 +58,9 @@ open class DingSpecialMessageChain(spMessageChain: Array<DingSpecialMessage>) {
  *  - 整体跳转ActionCard
  *  - 独立跳转ActionCard
  *  - FeedCard
+ *
+ *  一般来讲，不出意外的话以上几个类型的实现都是`data class`的形式
+ *
  *  @param T 类型自己
  * @author ForteScarlet <ForteScarlet></ForteScarlet>@163.com>
  * @date 2020/8/7
@@ -108,7 +113,7 @@ abstract class BaseDingSpecialMessage<T: DingSpecialMessage>(override val type: 
     /**
      * 判断类型
      */
-    open fun checkType(other: DingSpecialMessage): Boolean = this::class == other::class
+    open fun checkType(other: DingSpecialMessage): Boolean = other === this || this::class == other::class
 
     /**
      * 将一个额外的类型转化为当前类型

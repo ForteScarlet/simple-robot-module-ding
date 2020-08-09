@@ -49,13 +49,13 @@ object DingCQUtil {
                 val codes = kqCode["qq"] ?: kqCode["code"] ?: ""
                 return KQDingTemplate.at(codes)
             }
-            "markdown" -> {
+            "ding-markdown" -> {
                 val title = kqCode["title"] ?: throw DingSpecialMessageException("noCqParam", "markdown", "title")
                 val text = kqCode["text"] ?: ""
                 DingMarkdown(title, text)
             }
             // type link
-            "link" -> {
+            "ding-link" -> {
                 val title = kqCode["title"] ?: throw DingSpecialMessageException("noCqParam", "link", "title")
                 val text = kqCode["text"] ?: ""
                 val messageUrl = kqCode["messageUrl"] ?: throw DingSpecialMessageException("noCqParam", "link", "messageUrl")
@@ -65,7 +65,7 @@ object DingCQUtil {
 
             // actionCard
             // [CQ:actionCard,...btnTitle=,btnUrl=]
-            "actionCard" -> {
+            "ding-actionCard" -> {
                 val title = kqCode["title"] ?: throw DingSpecialMessageException("noCqParam", "actionCard", "title")
                 val text = kqCode["text"] ?: ""
                 val btnOrientation = kqCode["text"] ?: "1"
@@ -93,9 +93,12 @@ object DingCQUtil {
                 }
             }
 
-            "feedCard" -> {
-                TODO("todo this")
-            }
+//            "ding-feedCard" -> {
+//                // feed card 转化为CQ还挺麻烦的, 毕竟设计到数组
+//
+//
+//                TODO()
+//            }
             else -> DingText(kqCode.toString())
         }
     }
