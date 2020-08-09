@@ -57,7 +57,7 @@ class DingComponentConfiguration {
      * sender builder
      */
     @get:Beans
-    val dingSenderBuilderImpl: DingSenderBuilderImpl = DingSenderBuilderImpl
+    val dingSenderBuilder: DingSenderBuilderImpl = DingSenderBuilderImpl
 
     /**
      * 获取配置

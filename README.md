@@ -1,6 +1,16 @@
 # simple-robot-module-ding 钉钉机器人模组
 [![](https://img.shields.io/badge/simple--robot-module-green)](https://github.com/ForteScarlet/simple-robot-core)  [![img](https://img.shields.io/maven-central/v/love.forte.simple-robot/module-ding)](https://repo1.maven.org/maven2/love/forte/simple-robot/module-ding/)
+
 钉钉机器人模组提供了对钉钉机器人的送信整合
+
+## 说明
+
+由于钉钉机器人仅支持推送消息而不支持接收消息，因此决定将钉钉机器人作为**模组**发布而不是作为**组件**。
+
+你可以在任何组件中使用钉钉机器人模组，并使其与您的机器人应用相结合。
+
+钉钉机器人模组中所使用的交互方式来源于钉钉机器人[官方文档](https://ding-doc.dingtalk.com/doc#/serverapi3/iydd5h)。
+
 
 ## 配置文件：
 ```properties
@@ -106,5 +116,36 @@ simbot.ding.webhook=https://oapi.dingtalk.com/robot/send
         DingFeedCard feedCard = new DingFeedCard(new DingFeedCardLink[]{new DingFeedCardLink("标题", "图片链接", "跳转链接")});
 
 ```
+
+
+## 自定义
+
+钉钉机器人模组内置的一些东西可以通过自定义来实现定制化。
+
+> 内部使用的自动注入配置类为: `love.forte.simbot.component.ding.DingComponentConfiguration`、`love.forte.simbot.component.ding.TemporaryHttpClientConfiguration`
+
+注①：以下提及的接口在注入依赖的时候需要使其的优先级(`@Beans`的`priority`参数)大于`PriorityConstant.FIRST_LAST`
+注②：以下提及的可定制化接口的具体说明请参考源代码的注释，此处不会过于详细的介绍。
+
+### DingSecretCalculator
+> love.forte.simbot.component.ding.sceret.DingSecretCalculator
+
+签名计算器，用于计算钉钉机器人交互时候的密钥签名
+
+
+### DingSenderBuilder
+> love.forte.simbot.component.ding.sender.DingSenderBuilder
+
+接收参数并构建`DingSender`实例的构建器。
+
+
+### DingSenderManager
+> love.forte.simbot.component.ding.sender.DingSenderManager
+
+最终得到的`DingSenderManager`实例。不过一般通过定义`DingSenderBuilder`即可实现大部分的需求。
+
+
+
+
 
 
