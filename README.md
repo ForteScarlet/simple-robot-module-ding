@@ -1,5 +1,5 @@
 # simple-robot-module-ding 钉钉机器人模组
-[![](https://img.shields.io/badge/simple--robot-module-green)](https://github.com/ForteScarlet/simple-robot-core)  [![img](https://img.shields.io/maven-central/v/love.forte.simple-robot/module-ding)](https://search.maven.org/artifact/love.forte.simple-robot/module-ding)
+[![](https://img.shields.io/badge/simple--robot-module-green)](https://github.com/ForteScarlet/simple-robot-core)  [![img](https://img.shields.io/maven-central/v/love.forte.simple-robot/module-ding)](https://repo1.maven.org/maven2/love/forte/simple-robot/module-ding/)
 钉钉机器人模组提供了对钉钉机器人的送信整合
 
 ## 配置文件：
