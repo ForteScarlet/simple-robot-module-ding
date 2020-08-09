@@ -1,0 +1,12 @@
+# suppress inspection "UnusedProperty" for whole file
+
+
+
+
+exception.dingUnsupportedCode.notSupport=不支持的特殊字符：{0}
+
+exception.dingSpecialMessage.noCqParam=无法解析[{0}]类型的CQ码：缺少参数[{1}]
+exception.dingSpecialMessage.paramErr=无法解析[{0}]类型的CQ码：参数格式错误: [{1}]
+exception.dingSpecialMessage.plus=类型[{0}]与类型[{1}]不一致，无法合并
+
+exception.dingModule.noDefaultSender=不存在DingSender.

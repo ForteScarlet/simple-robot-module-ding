@@ -1,0 +1,2 @@
+load.bean=love.forte.simbot.component.ding.DingComponentConfiguration,\
+love.forte.simbot.component.ding.TemporaryHttpClientConfiguration
