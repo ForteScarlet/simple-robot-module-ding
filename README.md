@@ -34,6 +34,8 @@ simbot.ding.webhook=https://oapi.dingtalk.com/robot/send
 
 ### 导入依赖：
 
+[![img](https://img.shields.io/maven-central/v/love.forte.simple-robot/module-ding)](https://repo1.maven.org/maven2/love/forte/simple-robot/module-ding/)
+
 ```xml
 <dependency>
     <groupId>love.forte.simple-robot</groupId>
