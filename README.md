@@ -127,6 +127,7 @@ simbot.ding.webhook=https://oapi.dingtalk.com/robot/send
 > 内部使用的自动注入配置类为: `love.forte.simbot.component.ding.DingComponentConfiguration`、`love.forte.simbot.component.ding.TemporaryHttpClientConfiguration`
 
 注①：以下提及的接口在注入依赖的时候需要使其的优先级(`@Beans`的`priority`参数)大于`PriorityConstant.FIRST_LAST`
+
 注②：以下提及的可定制化接口的具体说明请参考源代码的注释，此处不会过于详细的介绍。
 
 ### DingSecretCalculator
