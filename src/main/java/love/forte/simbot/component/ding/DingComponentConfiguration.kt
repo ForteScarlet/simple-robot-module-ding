@@ -20,7 +20,7 @@ import com.forte.qqrobot.anno.depend.Beans
 import com.forte.qqrobot.anno.depend.Depend
 import com.forte.qqrobot.constant.PriorityConstant
 import com.forte.qqrobot.sender.HttpClientAble
-import com.forte.qqrobot.utils.DefaultHttpClientTemplate
+import com.forte.qqrobot.sender.HttpClientHelper
 import love.forte.simbot.component.ding.sceret.DefaultDingSecretCalculator
 import love.forte.simbot.component.ding.sceret.DingSecretCalculator
 import love.forte.simbot.component.ding.sender.*
@@ -33,7 +33,7 @@ class TemporaryHttpClientConfiguration {
      * 临时处理，提供一个[HttpClientAble]实例
      */
     @get:Beans(priority = PriorityConstant.SECOND_LAST)
-    val defaultHttpClientAble: DefaultHttpClientTemplate = DefaultHttpClientTemplate()
+    val defaultHttpClientAble: HttpClientAble = HttpClientHelper.getDefaultHttp()
 }
 
 /**

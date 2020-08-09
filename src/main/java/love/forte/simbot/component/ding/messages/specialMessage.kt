@@ -13,7 +13,7 @@
 package love.forte.simbot.component.ding.messages
 
 import love.forte.simbot.component.ding.exception.DingSpecialMessageException
-import java.util.AbstractMap
+import java.util.*
 
 
 /**

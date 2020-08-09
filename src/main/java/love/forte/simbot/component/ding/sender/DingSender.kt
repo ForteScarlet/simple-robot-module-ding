@@ -14,7 +14,6 @@ package love.forte.simbot.component.ding.sender
 
 import com.alibaba.fastjson.JSON
 import com.forte.qqrobot.sender.HttpClientAble
-import love.forte.simbot.component.ding.DingConfiguration
 import love.forte.simbot.component.ding.messages.DingSpecialMessage
 import love.forte.simbot.component.ding.messages.DingSpecialMessageChain
 import love.forte.simbot.component.ding.messages.toChain

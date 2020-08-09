@@ -13,8 +13,6 @@
 package com.test;
 
 import com.forte.lang.Language;
-import com.simplerobot.modules.utils.KQCode;
-import com.simplerobot.modules.utils.KQCodeUtils;
 import love.forte.simbot.component.ding.messages.*;
 
 /**
