@@ -6,7 +6,7 @@
 
     <groupId>love.forte.simple-robot</groupId>
     <artifactId>module-ding</artifactId>
-    <version>0.1-1.16</version>
+    <version>0.2-1.16</version>
 
     <name>simple-robot-module-ding</name>
     <description>a simple-robot module for ding-ding</description>
